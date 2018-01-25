@@ -7,3 +7,4 @@ Sys.setlocale("LC_ALL", 'en_US.UTF-8')
 read_excel("9021-201711.xls",sheet = 2)
 res <- read.xlsx("9021-201711.xls",1)
 Sys.setlocale("LC_ALL","Chinese")
+hello
