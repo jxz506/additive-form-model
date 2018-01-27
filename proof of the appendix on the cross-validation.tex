@@ -1,0 +1,481 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{setspace,graphicx,srcltx,harvard,threeparttable}
+\usepackage[nolists]{endfloat}
+\usepackage{float}
+\usepackage{harvard}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{amssymb}%花体字母加粗
+\usepackage{mathrsfs}%花体字母
+%\usepackage[final]{trackchanges}
+%\usepackage{trackchanges}
+%\DeclareMathOperator{\sgn}{sgn}
+\renewcommand{\subjclassname}{JEL Classification: }
+%\renewcommand{\initialsOne}{CP}
+%\renewcommand{\initialsTwo}{PD}
+%\renewcommand{\initialsThree}{JR}
+
+\newcommand{\bmx}{\bm{x}}
+\newcommand{\bmy}{\bm{y}}
+\newcommand{\bmw}{\bm{w}}
+\newcommand{\bmq}{\bm{q}}
+\newcommand{\bmp}{\bm{p}}
+\newcommand{\bmz}{\bm{z}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{lemma}{Lemma}[section]
+
+%% Change the default page sizes.
+
+% \newcommand{\citeaffixed}{XX}
+
+\setlength{\topmargin}{-0.25in} \setlength{\textheight}{8.5in}
+\setlength{\oddsidemargin}{.0in} \setlength{\evensidemargin}{.0in}
+
+\setlength{\textwidth}{6.5in} \setlength{\footskip}{.5in}
+
+\title[Appendix: Sketches of the proofs]{Proof of Proposition 1}
+
+\author{Jianhua Zhou}
+
+\author{Subal C.~Kumbhakar}
+
+\author{Christopher F.~Parmeter}
+
+\thanks{All {\tt R} code used in this paper is available upon request. All errors are ours alone.}
+
+\keywords{Partly Linear, Heteroskedasticity, Kernel, Bandwidth.}
+
+\date{\today}
+
+\begin{document}
+\section{the main idea about the paper}
+the main idea of this paper is to find a surrogate measure of the expected ASE, and then find the optimal bandwidth based on the surrogate measure by discounting the outliers of the data set.\\
+So the basic process of the proof is: 1: find the relationship between the RCRVD(h) and the ASE; 2, prove there is no difference about the optimal bandwidth chosen by the RCRVD　or the ASE as the $n$ goes to $\infty$. 3. After the proving, find the optimal h from the surrogate measure.\\
+\subsection{the proof of the proposition 1}
+The Proposition 1:
+\begin{align}
+RCRVD(h)=c+\dfrac{E\psi^{'}(.)}{2}MASE(h)+o_{p}(n^{-4/5}) \nonumber
+\end{align}
+$RCRVD(h)$ is the robust cross-validation rule.
+Find the sup norms in the one of the interval in the partition $(\zeta_{1}n^{-1/5},\zeta_{2}n^{-1/5})$\\
+The \textbf{definition} of the $ RCRVD(h)$
+\begin{align}
+RCRVD(h)=n^{-1}\sum_{i=1}^{n}\rho(\epsilon_{i}+m_{i}-\widetilde{m}_{-i})
+\end{align}
+$\rho$ is the function like from $Huber$ function, and $m_{i}$ is the true function and $\widetilde{m}_{-i}$ is the estimated function with leaf-one-out.\\
+expand the $\rho$ function by Taylor series at the points $\epsilon_{i},i=1,...,n$.
+the Taylor series function:
+\begin{align}
+\sum^{\infty}_{n=0}\dfrac{f^{n}(a)}{n!}(x-a)^{n}\nonumber
+\end{align}
+here $a$ is the point the expanded point, $x-a$ is the difference between the $x$ and the expanded point $a$, $f^{n}(a)$ is the order differentiate number.\\
+In this case, the function $\rho$ is the function $f$, and the expanded point is the $\epsilon_{i}$, setting the order number as 2, and the difference: 
+\begin{align}
+\triangle=\epsilon_{i}+m_{i}-\widetilde{m}_{-i}-\epsilon_{i}=m_{i}-\widetilde{m}_{-i}\nonumber
+\end{align}
+then the expanded function for the function $\rho$ is :
+\begin{align}
+RCRVD(h)&=n^{-1}\sum^{n}_{i=1}\rho(\epsilon_{i})+D_{1}(h)+D_{2}(h)+D_{3}(h)\nonumber\\
+D_{1}(h)&=n^{-1}\sum^{n}_{i=1}(m_{i}-\widetilde{m}_{-i})\psi(\epsilon_{i})\nonumber\\
+D_{2}(h)&=n^{-1}\sum^{n}_{i=1}\dfrac{(m_{i}-\widetilde{m}_{-i})^{2}}{2}\psi^{'}(\epsilon_{i})\nonumber\\
+D_{3}(h)&=n^{-1}\sum^{n}_{i=1}R_{i}\nonumber
+\end{align}
+here, $\psi$ is the bounded first derivative of function $\rho$, and the $D_{3}(h)$ is the remainder. Three things to prove:
+\begin{align}
+D_{1}(h)&=o_{p}(n^{-4/5})\\
+D_{2}(h)-\dfrac{E\psi^{'}}{2}MASE(h)&=o_{p}(n^{-4/5})\\
+D_{3}(h)&=o_{p}(n^{-4/5})
+\end{align}
+based on the definition of the robust smoother $\widetilde{m}(.)$ of $m(.)$:
+\begin{align}
+n^{-1}\sum_{i=1}^{n}\widetilde{\rho}(y_{i}-\widetilde{m}(x_{i}))=min \nonumber
+\end{align}
+the robust smoother can be defined as the zero:
+\begin{align}
+\sum_{i=1}^{n}\alpha_{i}(x)\widetilde{\psi}(y_{i}-.)
+\end{align}
+the Taylor expand for the equation (5) at the point $m(x)$ is :
+\begin{align}
+\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}(y_{i}-m_{i})+\sum_{j=1}^{n}\alpha_{j}(x_{i})(m_{i}-\widetilde{m}_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i})=0
+\end{align}
+where $|\nu_{i}|<|m_{i}-\widetilde{m}_{i}|$, if there exists a constant $q>0$ such that:
+\begin{align}
+\sup_{h}|\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i})-q|\rightarrow 0   \quad a.s.\nonumber\\
+\Rightarrow q=|\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i})|\nonumber
+\end{align}
+in the event set $\mathbb{P}=\{inf_{h}\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i})>0\}$, in this set, the 
+\begin{align}
+q=\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i})
+\end{align}
+plunge the equation (7) into the equation (6), then 
+\begin{align}
+\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}(y_{i}-m_{i})+(m_{i}-\widetilde{m}_{i})q=0\nonumber\\
+\Rightarrow m_{i}-\widetilde{m}_{i}=-\dfrac{\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}(y_{i}-m_{i})}{q}\nonumber
+\end{align}
+put the equation (19) into the $D_{1}(h)$, then:
+\begin{align}
+D_{1}(h)=-q^{-1}n^{-1}\sum_{i=1}^{n}\sum_{j\neq i}\alpha_{j}(x_{i})\psi(\epsilon_{j})\psi(\epsilon_{i}).\nonumber\\
+|D_{1}(h)|=q^{-1}n^{-1}\sum_{i=1}^{n}\sum_{j\neq i}\alpha_{j}(x_{i})\psi(\epsilon_{j})\psi(\epsilon_{i})
+\end{align}
+First prove the statement in the equation (9), first we say:
+\begin{align}
+P(A+B)\leq P(A)+P(B)\nonumber
+\end{align}
+Assume there are intervals $s_{1}\leq s_{2}\leq...\leq s_{m}$ forming a partition of the interval $(\zeta_{1}n^{-1/5},\zeta_{2}n^{-1/5})$ and the sizes of the intervals $(s_{e-1},s_{e}),e=2,...,m$, are chosen small enough. $s_{e-1}<h_{e}<s_{e}$.
+\begin{align}
+\textbf{sup}|-D_{1}(h_{e})+D_{1}(s_{e})+D_{1}(h_{e})|\leq \textbf{sup}|D_{1}(h_{e})-D_{1}(s_{e})|+\textbf{sup}|D_{1}(h_{e})| \nonumber\\
+P(\sup_{h}|D_{1}(h)|\geq n^{-4/5}\epsilon)\leq P(\sup_{e=2,...,m} \sup_{s_{e-1}<h_{e}<s_{e}}|D_{1}(h_{e})-D_{1}(s_{e})|\geq n^{-4/5}\epsilon/2)\\+P(\sup_{e=2,...,m}|D_{1}(h_{e})|\geq n^{-4/5}\epsilon/2) \nonumber
+\end{align}
+if we make the interval really small, m goes really big, then the first term of the probabilty is really small, so we only need to consider the second term.\\
+Using the following theorem :
+\begin{align}
+P(X\geq a)\leq \dfrac{E(X^{n})}{a^{n}}\nonumber\\
+{\mathbb {P} }{\biggl (}\bigcup _{i}A_{i}{\biggr )}\leq \sum _{i}{\mathbb {P} }(A_{i}).\nonumber
+\end{align}
+in our case pick up the sup value among the sets is the $\bigcup _{i}A_{i}$, since we have m intervals, then
+\begin{align}
+P(\sup_{e=2,...,m}|D_{1}(h_{e})|\geq n^{-4/5}\epsilon/2)&\leq m \sup_{e=2,...,m}P(|D_{1}(h_{e})|\geq n^{-4/5}\epsilon/2) \nonumber\\
+&\leq m \sup_{e=2,...,m} \dfrac{E(|D_{1}(h_{e})|)^{2k}}{(n^{-4/5}\eta)^{2k})}\\
+&=m \sup_{e=2,...,m} E(n^{4/5}\eta^{-1} |D_{1}(h_{e})|)^{2k}, \eta=\epsilon/2 \nonumber
+\end{align}
+here $k=1,2,,....$
+using the Theorem 2 of Whittle P, based on the definition of the $\alpha_{i}$,
+\begin{align}
+&\alpha_{i}=h^{-1}K\bigg(\dfrac{x-x_{i}}{h}\bigg)\bigg/ \bigg((nh)^{-1}\sum_{i=1}^{n}K\bigg(\dfrac{x-x_{i}}{h}\bigg)\bigg)
+\\
+&E(n^{4/5}\eta^{-1} |D_{1}(h_{e})|)^{2k} \nonumber\\
+\leq & c\bigg[n^{8/5}(\eta qnh_{e})^{-2} \nonumber\\
+&\times \sum_{i=1}^{n}\sum_{j\neq i}^{}\bigg\{nhK\bigg(\dfrac{x_{i}-x_{j}}{h_{e}}\bigg)\bigg/ \sum_{l=1}^{n}K\bigg(\dfrac{x_{i}-x_{j}}{h_{e}}\bigg)\bigg\}^{2}\\
+&\times E\psi^{2}(\epsilon_{i})E\psi^{2}(\epsilon_{j})\bigg]^{k} \nonumber
+\end{align}
+here since $K\bigg(\dfrac{x_{i}-x_{j}}{h_{e}}\bigg)>0$ then 
+\begin{align}
+K\bigg(\dfrac{x_{i}-x_{j}}{h_{e}}\bigg)\bigg/ \sum_{l=1}^{n}K\bigg(\dfrac{x_{i}-x_{j}}{h_{e}}\bigg)<=1\\
+\sum_{i=1}^{n}\sum_{j\neq i}^{}\bigg\{K\bigg(\dfrac{x_{i}-x_{j}}{h_{e}}\bigg)\bigg/ \sum_{l=1}^{n}K\bigg(\dfrac{x_{i}-x_{j}}{h_{e}}\bigg)\bigg\}^{2}<=(n*(n-1))<n^2
+\end{align}
+\textcolor{red}{the equation seems like reduced too much, maybe the multinomial theorem make the equation.}
+so the above the equation (32) would be 
+\begin{align}
+E(n^{4/5}\eta^{-1} |D_{1}(h_{e})|)^{2k}<&c\bigg[n^{(-4+8/5+2)k}h_{e}^{-2k}(E\psi^{2}(\epsilon_{i}))^{2k}\bigg] \nonumber\\
+&c\bigg[n^{(-2+8/5)k}h_{e}^{-2k}(E\psi^{2}(\epsilon_{i}))^{2k}\bigg]
+\end{align}
+based on such statement, 
+\begin{align}
+m \sup_{e=2,...,m} E(n^{4/5}\eta^{-1} |D_{1}(h_{e})|)^{2k} \nonumber\\
+\leq m \sup_{e=2,...,m}  c\bigg[n^{(-2+8/5)k}h_{e}^{-2k}(E\psi^{2}(\epsilon_{i}))^{2k}\bigg]
+\end{align}
+which goes to zero for fixed $m$,$h_{e}\in [s_{e-1},s_{e}]$ and $n$ going to $\infty$, if $k$ is chosen to be sufficiently large. 
+Until here, we have already finished the (A.1)$\blacksquare$
+\section{ Proof for the (A.2)}
+The logic of this part :
+\begin{align}
+D_{2}(h)-ED_{2}(h)=o_{p}(n^{-4/5})\\
+E(D_{2})=E\psi^{'}(\cdot)MASE(h)/2+o_{p}(n^{-4/5})\\
+then\nonumber\\\
+D_{2}(h)=E\psi^{'}(\cdot)MASE(h)/2+o_{p}(n^{-4/5})
+\end{align}
+The Proof:
+\\
+The definition:
+\begin{align*}
+D_{2}(h)=n^{-1}\sum_{i=1}^{n}\dfrac{(m_{i}-\widetilde{m}_{-i})^2}{2}\psi^{'}(\epsilon_{i}) \\
+ED_{2}(h)=n^{-1}\sum_{i=1}^{n}E\dfrac{(m_{i}-\widetilde{m}_{-i})^2}{2}E\psi^{'}(\epsilon_{i})
+\\
+or 
+D_{2}(h)=n^{-1}\sum_{i=1}^{n}\dfrac{(m_{i}-\widetilde{m}_{i})^2}{2}\psi^{'}(\epsilon_{i}) \\
+ED_{2}(h)=n^{-1}\sum_{i=1}^{n}E\dfrac{(m_{i}-\widetilde{m}_{i})^2}{2}E\psi^{'}(\epsilon_{i})
+\end{align*}
+\begin{align}
+D_{2}(h)-ED_{2}(h)&=n^{-1}\sum_{i=1}^{n}\dfrac{(m_{i}-\widetilde{m}_{i})^2}{2}\psi^{'}(\epsilon_{i})-n^{-1}\sum_{i=1}^{n}E\dfrac{(m_{i}-\widetilde{m}_{-i})^2}{2}E\psi^{'}(\epsilon_{i})\nonumber\\
+&=\dfrac{1}{2n}\bigg[\sum_{i=1}^{n}((m_{i}-\widetilde{m}_{i})^2-E(m_{i}-\widetilde{m}_{-i})^2+E(m_{i}-\widetilde{m}_{-i})^2)\psi^{'}(\epsilon_{i})\nonumber\\
+&-\sum_{i=1}^{n}E(m_{i}-\widetilde{m}_{-i})^2E\psi^{'}(\epsilon_{i})\nonumber\\
+&=\dfrac{1}{2n}\bigg[\sum_{i=1}^{n}((m_{i}-\widetilde{m}_{i})^2-E(m_{i}-\widetilde{m}_{-i})^2\psi^{'}(\epsilon)-\sum_{i=1}^{n}E(m_{i}-\widetilde{m}_{-i})^2(\psi^{'}(\epsilon)-E\psi^{'}(\epsilon_{i}))\bigg]\nonumber\\
+&=\dfrac{1}{2}\bigg[n^{-1}\sum_{i=1}^{n}W^{i}_{i}(h)+n^{-1}\sum_{i=1}^{n}W_{2}^{i}(h)\bigg]
+\end{align}
+the next step is to verify the first and second term are uniformly in h to $o_{p}(n^{-4/5})$\\
+In our assumption, the $\psi(.)$ is bounded, so for $n^{-1}\sum_{i=1}^{n}W_{1}^{i}$ it is enough just to care about the part $[((m_{i}-\widetilde{m}_{i})^2-E(m_{i}-\widetilde{m}_{-i})^2],i=1,...,n$ are $o_{p}(n^{-4/5})$
+\\
+The logic of expanding is to open the $sum^2$ term and hope to find the term like $\psi(y_{j}-m_{i})-E\psi(y_{j}-m_{j})$, the expectation of such term is zero.
+\begin{align}
+\bigg[&\dfrac{\sum_{j\neq i}\alpha_{j}(x_{i})\psi(y_{j}-m_{i})}{q}\bigg]^{2}-E\bigg[\dfrac{\sum_{j\neq i}\alpha_{j}(x_{i})\psi(y_{i}-m_{i})}{q}\bigg]^{2}\nonumber\\
+&\bigg \{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{j}-m_{i})-E\psi(y_{j}-m_{i})\}\nonumber\\
+&\times\{\psi(y_{k}-m_{i})-E\psi(y_{k}-m_{i})\}\bigg \}\bigg/q^{2}\\
+&+\dfrac{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{j}-m_{i})E\psi(y_{k}-m_{i})\}}{q^2}\nonumber\\
+&+\dfrac{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{k}-m_{i})E\psi(y_{j}-m_{i})\}}{q^2}\nonumber\\
+&-\dfrac{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{E\psi(y_{k}-m_{i})E\psi(y_{j}-m_{i})\}}{q^2}\nonumber\\
+&-E\bigg[\dfrac{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{j}-m_{i}) \psi(y_{k}-m_{i})\}}{q^2}\bigg]
+\end{align}
+for the equation (41), if $k=j$ then we have:$E\psi^{2}(y_{j}-m_{i})$, in this logic, then for the equation (41) and (42), we have:
+\begin{align}
+-\dfrac{\sum_{j\neq i} \alpha^{2}_{j}(x_{i})\{E(\psi(y_{j}-m_{i}))^{2}\}}{q^2}-\dfrac{\sum_{j\neq i} \sum_{k\neq i,k\neq j}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{E\psi(y_{k}-m_{i})E\psi(y_{j}-m_{i})\}}{q^2}\nonumber\\
+-\dfrac{\sum_{j\neq i} \alpha^{2}_{j}(x_{i})\{E\psi^{2}(y_{j}-m_{i})\}}{q^2}-\dfrac{\sum_{j\neq i} \sum_{k\neq i,k\neq j}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{E\psi(y_{k}-m_{i})E\psi(y_{j}-m_{i})\}}{q^2}\nonumber
+\end{align}
+so plunge the equation (44), (45) into the process, we got:
+\begin{align}
+\bigg[&\dfrac{\sum_{j\neq i}\alpha_{j}(x_{i})\psi(y_{j}-m_{i})}{q}\bigg]^{2}-E\bigg[\dfrac{\sum_{j\neq i}\alpha_{j}(x_{i})\psi(y_{i}-m_{i})}{q}\bigg]^{2}\nonumber\\
+&=\bigg \{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{j}-m_{i})-E\psi(y_{j}-m_{i})\}\nonumber\\
+&\times\{\psi(y_{k}-m_{i})-E\psi(y_{k}-m_{i})\}\bigg \}\bigg/q^{2}\nonumber\\
+&+\dfrac{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{j}-m_{i})E\psi(y_{k}-m_{i})\}}{q^2}\nonumber\\
+&+\dfrac{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{k}-m_{i})E\psi(y_{j}-m_{i})\}}{q^2}\nonumber\\
+&-\dfrac{\sum_{j\neq i} \alpha^{2}_{j}(x_{i})\{(E\psi(y_{j}-m_{i}))^{2}+\{E\psi^{2}(y_{j}-m_{i})\}\}}{q^2}\nonumber\\
+&-\dfrac{2\sum_{j\neq i} \sum_{k\neq i,k\neq j}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{E\psi(y_{k}-m_{i})E\psi(y_{j}-m_{i})\}}{q^2}
+\end{align}
+Here, we would like to combine equation (49) and (50) and (52),then we would also have:
+\begin{align}
+-\dfrac{\sum_{j\neq i} \alpha^{2}_{j}(x_{i})\{\{E\psi^{2}(y_{j}-m_{i})\}-(E\psi(y_{j}-m_{i}))^{2}\}}{q^2}\nonumber
+\end{align}
+then we have:
+\begin{align}
+&W^{i}_{11}(h)=\bigg \{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{j}-m_{i})-E\psi(y_{j}-m_{i})\}\nonumber\\
+&\times\{\psi(y_{k}-m_{i})-E\psi(y_{k}-m_{i})\}\bigg \}\bigg/q^{2}\nonumber\\
+&W^{i}_{12}(h)=\dfrac{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{j}-m_{i})-E\psi(y_{j}-m_{i})\}E(\psi(y_{k}-m_{i})}{q^2}\nonumber\\
+&W^{i}_{13}(h)=\dfrac{\sum_{j\neq i} \sum_{k\neq i}\alpha_{j}(x_{i})\alpha_{k}(x_{i})\{\psi(y_{k}-m_{i})-E\psi(y_{k}-m_{i})\}E(\psi(y_{j}-m_{i})}{q^2}\nonumber\\
+&W^{i}_{14}(h)=-\dfrac{\sum_{j\neq i} \alpha^{2}_{j}(x_{i})\{\{E\psi^{2}(y_{j}-m_{i})\}-(E\psi(y_{j}-m_{i}))^{2}\}}{q^2}
+\end{align}
+if we set $r_{j}=\psi(y_{j}-m_{i})-E\psi(y_{j}-m_{i})$, then expectation of $r_{j}$ is zero. So compared with the (A.8), the last term $E\psi^{2}(\epsilon_{i})=0^{2k}=1$, then so the first three term we have:
+\begin{align}
+P(\sup_{h}|W^{i}_{1(L=1,2,3)}|\geq n^{-4/5}\epsilon)\leq cmn^{(-2+8/5)k}h_{e}^{-2k}
+\end{align}
+for the $w^{i}_{14}$, since the expectation of $\psi$ is limited, then the conclusion is same. All of them would vanish as long as a large enough $k$ is chosen. 
+\\
+Based on the above, we already prove that:
+\begin{align}
+|E(m_{i}-\widetilde{m}_{-i})^2-E(m_{i}-\widetilde{m}_{i})^2|=o_{p}(n^{-4/5})\nonumber\\
+E(m_{i}-\widetilde{m}_{-i})^{2}=O_{p}(n^{-1}h^{-1}+h^{4})\nonumber\\
+\Rightarrow\nonumber\\
+P(\sup_{h}|W^{i}_{2}|\geq n^{-4/5}\epsilon)\leq cm(n^{-1}h_{e}^{-1}+h_{e}^{4})n^{(-2+8/5)k}h_{e}^{-2k}
+\end{align}
+same as above, which means $W^{i}_{2}(h)=o_{p}(n^{-4/5})$.
+since $E(D_{2})=E\psi^{'}(.)MASE(h)/2+o_{p}(n^{-4/5})$, then (A.2) follows from the above derivations.
+\\
+\section{The proof of the Proposition 3}
+\subsection{properties about the kernel density function}
+Some basic technique about the nonparametric method:
+The form of the weight function $\alpha_{i}$ :
+\begin{align}
+\alpha_{i}(x)=(nh)^{-1}K\bigg(\dfrac{x-x_{i}}{h}\bigg)\bigg/\sum_{i=1}^{n}K\bigg(\dfrac{x-x_{i}}{h}\bigg)=\dfrac{K_{h}(x-x_{i})}{\hat{f}_{h}}\nonumber\\
+\hat{f}_{h}=n^{-1}\sum_{i=1}^{n}K_{h}(x-x_{i}),K_{h}(u)=h^{-1}K(u/h)\nonumber
+\end{align}
+two important constants associated with a kernel function $K(.)$ are its variance $\sigma^{2}_{K}=d_{K}$, and roughness $c_{K}$ which is defined as:
+\begin{align}
+d_{K}=\int z^{2}K(z)dz, c_{K}=\int K^{2}(z)dz \nonumber
+\end{align}
+assume :
+\begin{align}
+y_{i}=m(x_{i})+\epsilon_{i}=m(x)+(m(x_{i}-m(x)))+\epsilon_{i}\nonumber
+\end{align}
+Then:
+\begin{align}
+\dfrac{1}{nh}\sum_{i=1}^{n}K\bigg(\dfrac{x_{i}-x}{h}\bigg)y_{i}=&\dfrac{1}{nh}\sum_{i=1}^{n}K\bigg(\dfrac{x_{i}-x}{h}\bigg)\bigg[m(x)+(m(x_{i})-m(x))+\epsilon_{i}\bigg]\nonumber\\
+&=\hat{f}(x)m(x)+\dfrac{1}{nh}\sum_{i=1}^{n}K\bigg(\dfrac{x_{i}-x}{h}\bigg)(m(x_{i})-m(x))+\dfrac{1}{nh}\sum_{i=1}^{n}K\bigg(\dfrac{x_{i}-x}{h}\bigg)\epsilon_{i}\nonumber\\
+&=\hat{f}(x)m(x)+\hat{m}_{1}(x)+\hat{m}_{2}(x)
+\end{align}
+which means:
+\begin{align}
+\hat{m}(x)=m(x)+\dfrac{\hat{m}_{1}}{\hat{f}(x)}+\dfrac{\hat{m}_{2}(x)}{\hat{f}(x)}\nonumber\\
+\textbf{bias}=\hat{m}_{1}(x)/\hat{f}(x)+\hat{m}_{2}(x)/\hat{f}(x)
+\end{align}
+the mean and the variance of the function $m(x)$:
+\begin{align}
+&E(\epsilon_{i}|x_{i})=0\Rightarrow E(\hat{m}_{2}(x))=0\nonumber\\
+Var(\hat{m}_{2}(x))&=\dfrac{1}{nh^{2}}E\bigg(K(\dfrac{x_{i}-x}{h})\epsilon_{i}\bigg)^{2}+n\bigg(E\bigg(K(\dfrac{x_{i}-x}{h})\epsilon_{i}\bigg)\bigg)^{2}\nonumber\\
+&=\dfrac{1}{nh^{2}}E\bigg(K(\dfrac{x_{i}-x}{h})\epsilon_{i}\bigg)^{2}\nonumber\\
+&=\dfrac{1}{nh^{2}}E\bigg(K^{2}(\dfrac{x_{i}-x}{h})\epsilon^{2}_{i}\bigg)\nonumber\\
+&=\dfrac{1}{nh^{2}}E\bigg(K^{2}(\dfrac{x_{i}-x}{h})\sigma^{2}_{x_{i}}\bigg), \textbf{depends on}  E(\epsilon_{i}|x_{i})=0\\
+\text{Then}&\nonumber\\
+Var(\hat{m}_{2}(x))&=\dfrac{1}{nh^{2}}\int K^{2}(\dfrac{x_{i}-x}{h})\sigma^{2}(z)dzf(z)dz
+\end{align}
+transfer the variable $\dfrac{z-x}{h}=u$, then $z=hu+x$, then 
+\begin{align}
+Var(\hat{m}_{2}(x))=&\dfrac{1}{nh^{2}}\int K(u)^2\sigma(x+hu)f(x+hu)dhu\nonumber\\
+Var(\hat{m}_{2}(x))=&\dfrac{1}{nh^{2}}\int K(u)^2\sigma(x+hu)f(x+hu)hdu\nonumber\\
+Var(\hat{m}_{2}(x))=&\dfrac{1}{nh}\int K(u)^2\sigma(x+hu)f(x+hu)dhu+o(\dfrac{1}{nh})\nonumber\\
+=&\dfrac{\sigma^2(x)f(x)}{nh}c_{k}+o(\dfrac{1}{nh})\nonumber
+\end{align}
+if $h \longrightarrow 0, Nh\longrightarrow\infty$, then applying CLT:
+\begin{align}
+\sqrt{nh}\hat{m}_{}(x)\underrightarrow{d} N(0,\sigma^{2}(x)f(x)c_{k})
+\end{align}
+The mean of $m_{1}(x)$ and the variance:
+\begin{align}
+E(\hat{m}_{1}(x))=\dfrac{1}{h}E[K(\dfrac{x_{i}-x}{h})(m(x_{i})-m(x))]=\dfrac{1}{h}\int K(\dfrac{z-x}{h})(m(z)-m(x))f(z)dz\nonumber
+\end{align}
+using the same way as above, we have:
+\begin{align}
+E[\hat{m}_{1}(x)]=\int K(u)(m(x+hu)-m(x))f(x+hu)du \nonumber
+\end{align}
+Expand $m(x+hu)$ in 2nd-order, and expand the $f(x+hu)$ into 1st order Taylor expansions around $x$, we get:
+\begin{align}
+E[\hat{m}_{1}(x)]&=\int K(u)(m(x+hu)-m(x))f(x+hu)du\nonumber\\
+&=\int K(u)(m(x)+hum^{'}(x)+\dfrac{h^{2}u^{2}}{2}m^{''}(x)-m(x))(f(x)+huf^{'}(x))du\nonumber\\
+&=\int K(u)(m(x)+hum^{'}(x)+\dfrac{h^{2}u^{2}}{2}m^{''}(x))(f(x)+huf^{'}(x))du\nonumber\\
+&=hm^{'}(x)f(x)\int K(u)udu+h^{2}[\dfrac{1}{2}m^{''}(x)f(x)+m^{'}f^{'}(x)]\int K(u)u^{2}du+o(h^{3})\nonumber\\
+\textbf{here} \int k(u)udu=0 \Rightarrow \\
+&\approx h^{2}[\dfrac{1}{2}m^{''}f(x)+m^{'}f^{'}(x)]\kappa_{2}=h^{2}\kappa_{2}B(x)f(x)
+\end{align}
+For the variance part, the logic is almost same, the big difference is that, the expectation is $O(h^{2})$, however the variance is $O(h^{2}/nh)$ which is of smaller order than $O(1/nh)$ which would leads the variance going to zero in the asymptotic way. The following is about that:
+\begin{align}
+Var(\hat{m}_{1})&=E(\hat{m}^{2}_{1}(x))-E^2(\hat{m}_{1}(x))\nonumber\\
+E(\hat{m}^{2}_{1}(x))&=\dfrac{1}{nh^{2}}E[K(\dfrac{x_{i}-x}{h})(m(x_{i})-m(x))]^{2}\nonumber\\
+E(\hat{m}^{2}_{1}(x))&=\dfrac{1}{nh}E[k^{2}(\dfrac{x_{i}-x}{h})(m(x_{i})-m(x)))^{2}]\nonumber\\
+&=\dfrac{1}{nh}\int k^{2}(u)(m(x+hu)-m(x))^{2}f(x+hu)du\nonumber
+\end{align}
+do the expedition for $m(x+hu),f(x+hu)$, we get:
+\begin{align}
+E(\hat{m}^{2}_{1}(x))&=\dfrac{1}{nh}\int k^{2}(u)(m(x+hu)-m(x))^{2}f(x+hu)du\nonumber\\
+&=\dfrac{1}{nh}\int k^{2}(u)(m(x)+hum^{'}(x)+\dfrac{h^{2}h^{2}}{2}m^{''}(x)-m(x))^{2}(f(x)+huf^{'}(x))du\nonumber\\
+&=\dfrac{1}{nh}\int k^{2}(u)(hum^{'}(x)+\dfrac{h^{2}u^{2}}{2}m^{''}(x))^{2}(f(x)+huf^{'}(x))du\nonumber
+\end{align} 
+which is $O(\dfrac{h^{2}}{nh})$,when prove that the variance is $O(\dfrac{h^2}{nh})$, then we know the variance would goes to zero in probability.
+\begin{align}
+\textbf{as } h \longrightarrow 0, \textbf{ and } Nh \longrightarrow \infty , \sqrt{Nh}[\hat{m}_{1}(x)-h^{2}d_{k}B(x)f(x)] \xrightarrow{p} 0
+\end{align}
+since $\hat{f}(x) \xrightarrow{p} f(x)$
+\begin{align}
+\sqrt{Nh}[\hat{m}_{1}(x)/\hat{f}(x)-h^{2}d_{k}B(x)] \xrightarrow{p} 0
+\end{align}
+Then :
+\begin{align}
+MASE=variance+bias^2&=Var(\hat{m}_{2}(x))+(E(\hat{m}_{1}(x)))^{2}\nonumber\\
+&=(nh)^{-1}\sigma^{2}(x)c_{k}/f(x)+h^{4}d^{2}_{k}B(x)^2+o((nh)^{-1}+h^{4})
+\end{align}
+the optimal bandwidth is that make the MSAE minimal:$h=arg min MASE$, take the derivative, we with respect to $h$, we get:
+\begin{align}
+-n^{-1}h^{-2}\sigma^{2}(x)c_{k}/f(x)+4h^{3}d^{2}_{k}B^{2}(x)=0\nonumber\\
+\Rightarrow h=\bigg[\dfrac{\sigma^{2}(x)c_{k}d^{2}_{k}B^{2}(x)}{4f(x)}\bigg]^{1/5}n^{-1/5}
+\end{align}
+Based on the result about the h, then assume that:
+\begin{align}
+D(\epsilon)=\inf_{|u-v|>n^{-1/5}\epsilon}n^{-4/5}|RCRVD(u)-RVRVD(v)|
+\end{align}
+$n^{-4/5}$ comes from the conclusion from $D_{1},D_{2},D_{3}$, it follows that:
+\begin{align}
+P(&|h_{RCRDV}-h_{MASE}|>n^{-1/5}\epsilon)\\
+&\leq P\bigg(n^{4/5}\sup_{h}|RCRVD(h_{MASE})-RCRVD(h_{RCRVD})|>D(\epsilon)\bigg)\nonumber\\
+based on A.13 \nonumber\\
+&\leq P\bigg(n^{4/5}\sup_{h}\bigg|RCRVD(h_{MASE})-\dfrac{E\psi^{'}(.)}{2}MASE(h_{MASE})\nonumber\\
+&+\dfrac{E\psi^{'}(.)}{2}MASE(h_{MASE})-RCRVD(h_{RCRVD})\bigg|>D(\epsilon)\bigg)
+\end{align}
+since 
+\begin{align}
+MASE(h_{MASE})=\min_{h}MASE(h)\leq MASE(h_{RCRVD}) \textbf{ by the definition }\nonumber\\
+RCRVD(h_{RCRVD})=\min_{h}RCRVD(h)\leq RCRVD(h_{MASE})\textbf{ by the definition }\nonumber
+\end{align}
+then can rewrite the function as:
+\begin{align}
+P(&|h_{RCRDV}-h_{MASE}|>n^{-1/5}\epsilon)\nonumber\\
+&\leq P\bigg(n^{4/5}\sup_{h}\bigg|RCRVD(h_{MASE})-\dfrac{E\psi^{'}(.)}{2}MASE(h_{MASE})\bigg|> \dfrac{D(\epsilon)}{2}\nonumber\\
+&+P\bigg(n^{4/5}\sup_{h}|\dfrac{E\psi^{'}(.)}{2}MASE(h_{MASE})-RCRVD(h_{RCRVD})\bigg|>\dfrac{D(\epsilon)}{2}\bigg)\nonumber\\
+\longrightarrow 0,\nonumber
+\end{align}
+the rest of the other two are the same.
+\section{the proof of the proposition 2}
+In the part of proving the proposition 3, we say that the optimal bandwidth would like to choose is that: $ h=\bigg[\dfrac{\sigma^{2}(x)c_{k}d^{2}_{k}B^{2}(x)}{4f(x)}\bigg]^{1/5}n^{-1/5}$, since ASE is $ o((nh)^{-1}+h^{4}) $, then put the optimal bandwidth inside the case, then we have:
+\begin{align}
+MASE=ASE+o((nn^{-1/5})^{-1})=ASE+n^{-4/5}
+\end{align}
+
+
+
+
+
+
+
+\section{the extension proof of the paper si to introduce the c}
+A standard normal kernel was used for all smoothing. Robustness in smoothing was chieved by setting $\widetilde{\rho}$ to Huber's.
+\begin{align}
+\rho(u) \bigg\{
+  \begin{tabular}{ll}
+   $\dfrac{u^2}{2}$, & if $|u|<c$ , \\
+  $c|u|-\dfrac{c^2}{2}$,& if $|u|\geq c$ ,
+  \end{tabular}
+\end{align}
+we can see from the definition that, there is no $c$ inside the function $\rho(u)$, so inside our discussion, the function $\rho$ should related to both of $c, \rho$.
+\begin{align}
+\rho(u,c) \bigg\{
+  \begin{tabular}{ll}
+   $\dfrac{u^2}{2}$, & if $|u|<c$ , \\
+  $c|u|-\dfrac{c^2}{2}$,& if $|u|\geq c$ ,
+  \end{tabular}
+\end{align}
+\subsection{the meaning of $c$}
+the constant $c$ regulates the amount of robustness. The basic logic is that different $c$ value would cut some outliers. For example, in the linear case, if the error term is normal distributed and there is no contamination, the best choice of $c$ is $\infty$. On the other hand, if the error terms follow a heavy-tailed distribution, then $c$ should be chosen to be a small positive value: if the $c$ is small, then the function would always be: $c|u|-\dfrac{c^2}{2}$, which makes the function $\rho$ smaller, and relatively make the sum of error relatively smaller.
+\subsection{how to insert the $c$ into the whole process}
+inserting the variable $c$ into the process means in order to have a good estimation, we not only need a optimal bandwidth, we also need an optimal constant $c$.
+\subsection{the process of find an optimal bandwidth and a optimal constant}
+A robust smoother $\tilde{m}(.)$ of $m(.)$ is defined by:
+\begin{align}
+n^{-1}\sum^{n}_{i=1}\tilde{\rho}\{y_{i}-\tilde{m}(x_{i}),c\}=\text{min}
+\end{align}
+the first derivative $\tilde{\phi}$ with bounded is :
+\begin{align}
+\sum^{n}_{i}\alpha_{i}(x)\tilde{\phi}(y_{i}-.,c)
+\end{align}
+where $\alpha_{i}(x)$ is a weight function based on a kernel $K$ and the bandwidth $h$, the choice of $\tilde{\rho}$ is problem-specific. The weight function $\alpha_{i}(x)$:
+\begin{align}
+(h)^{-1}K\bigg(\dfrac{x-x_{i}}{h}\bigg)\bigg/\bigg((nh)^{-1}\sum^{n}_{i=1}K\bigg(\dfrac{x-x_{i}}{h}\bigg)\bigg)\nonumber
+\end{align}
+similarly, the leave-one-out-smoother, $\tilde{m}_{i}$ of $m(.)$ is defined as the zero of :
+\begin{align}
+\sum_{j\neq i} \alpha_{j}(x)\tilde{\psi}(y_{i}-.,c)\nonumber
+\end{align}
+Then the robust cross-validation rule with the vary constant $c$ can be defined as:
+\begin{align}
+\textcolor{red}{RCRVD(h,c)}=n^{-1}\sum_{i=1}^{n}\rho\{y_{i}-\tilde{m}_{-i}(x_{i}),c\})
+\end{align}
+and 
+\begin{align}
+ASE(h,c)=n^{-1}\sum_{i=1}^{n}\{\widetilde{m}(x_{i})-m(x_{i})\}^{2}\nonumber\\
+\textcolor{red}{MASE(h,c)}=E\{ASE(h,c)|x_{1},...,x_{n}\}\nonumber
+\end{align}
+the following part is to demonstrate that the equation (69) is a reasonable bandwidth selector.
+The basic assumption about the distribution $F(.),m(x),\psi$ are the same as with the original paper:$A1-A8$.
+Here, we notice that all the changes by proposing $c$ into the function $\rho$ would happen to the derivatives of the \textcolor{red} {$\rho(h,c)$: $\psi(h,c)$}. So all the assumption from the paper by DenisHeng-Yan Leung about the kernel function would be same:\\
+(A1) F(.)  is symmetric about zero\\
+(A2) The kernel  K  is symmetric about zero. Furthermore, K is positive, Lipschitz
+continuous and satisfies
+\begin{align}
+\int K(t)dt=1
+\end{align}
+(A3) The function $m:[0,1]\longrightarrow (c,d)\in R$ is twice differentiable with:
+\begin{align}
+&\int\{m^{(2)}(x)\}^{2}dx<\infty \text{ and } m^{p}(0)=m^{(p)}(1),p=0,1,2,...,\\
+&\text{where } m^{(p)} \text{ denotes the pth derivative of }  \nonumber
+\end{align}
+(A4) The bandwidth sequence $h$ depends on $n$ and satisfies $h\longrightarrow 0$, $nh\longrightarrow \infty $ as $n \longrightarrow \infty$\\
+(A5)The new function \textcolor{red}{$\rho(h,c)$} is a continuous function symmetric about zero and is differentiable everywhere except possibly at a finite number of points.
+\\
+The next point is find a representation of $\widetilde{m}_{i}$ in a workable form. From the definition if $\widetilde{m}_{i}$
+\begin{align}
+\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}(y_{i}-m_{i},c)+\sum_{j=1}^{n}\alpha_{j}(x_{i})(m_{i}-\widetilde{m}_{i})\widetilde{\psi}^{'}(y_{j}-m_{i}+\nu_{i},c)=0
+\end{align}
+where $|\nu_{i}|<|m_{i}-\widetilde{m}_{i}|$. Therefore, if there exists a constant $q>0$ such that:
+\begin{align}
+\sup_{h}|\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i},c)-q|\rightarrow 0   \quad a.s.\nonumber\\
+\Rightarrow q=|\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i},c)|\nonumber
+\end{align}
+Just as the Denis paper, on
+in the event set $\mathbb{P}=\{inf_{h}\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i},c)>0\}$, in this set, the 
+\begin{align}
+q=\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}^{'}(y_{i}-m_{i}+\nu_{i},c)
+\end{align}
+plunge the equation (7) into the equation (6), then 
+\begin{align}
+\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}(y_{i}-m_{i},c)+(m_{i}-\widetilde{m}_{i})q=0\nonumber\\
+\Rightarrow m_{i}-\widetilde{m}_{i}=-\dfrac{\sum_{j=1}^{n}\alpha_{j}(x_{i})\widetilde{\psi}(y_{i}-m_{i},c)}{q}\nonumber
+\end{align}
+
+
+
+
+
+
+
+ \end{document}
+
+
+
